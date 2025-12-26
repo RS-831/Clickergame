@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cookie Clicker Clone</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="game-wrapper">
+    <!-- Linkes Panel: Upgrades -->
+    <aside class="upgrades-panel">
+      <div class="panel-title">Upgrades</div>
+      <div class="panel-subtitle">Kaufe Upgrades, um mehr Cookies zu produzieren.</div>
+      <div class="upgrades-grid" id="upgradesGrid"></div>
+    </aside>
+
+    <!-- Rechtes Panel -->
+    <main class="right-panel">
+      <div class="stats-bar">
+        <div class="stat-box">
+          <div class="stat-label">Cookies</div>
+          <div class="stat-value" id="cookieCount">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Cookies pro Sekunde</div>
+          <div class="stat-value" id="cpsValue">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Cookies pro Klick</div>
+          <div class="stat-value" id="cpcValue">1</div>
+        </div>
+      </div>
+
+      <section class="main-area">
+        <div class="cookie-area">
+          <div class="big-cookie" id="bigCookie" aria-label="Cookie klicken" role="button" tabindex="0"></div>
+          <div class="big-cookie-label">Klicke auf den Cookie, um Cookies zu verdienen!</div>
+        </div>
+
+        <div class="right-info">
+          <div class="production-info">
+            <div>
+              <span><strong>Gesamtproduktion:</strong></span>
+              <span id="totalProductionText">0 Cookies/Sekunde</span>
+            </div>
+            <div>
+              <span><strong>Insgesamt gekaufte Upgrades:</strong></span>
+              <span id="totalUpgradesText">0</span>
+            </div>
+          </div>
+
+          <div class="upgrade-icons-title">Deine Upgrades (zufällige Platzierung):</div>
+          <div class="scatter-field" id="scatterField" aria-label="Upgrade Fläche"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
