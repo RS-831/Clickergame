@@ -220,13 +220,59 @@ document.addEventListener("DOMContentLoaded", () => {
     updateUI();
   }, 1000 / TICK_RATE);
 
+// Speichert den aktuellen Stand im LocalStorage
+function saveGame() {
+  const gameState = {
+    cookies: cookies,
+    upgrades: upgradesState,
+    timestamp: Date.now()
+  };
+  localStorage.setItem("cookieClickerSave", JSON.stringify(gameState));
+}
+
+// Lädt den Stand und stellt die Variablen wieder her
+function loadGame() {
+  const savedData = localStorage.getItem("cookieClickerSave");
+  if (!savedData) return;
+
+  const gameState = JSON.parse(savedData);
+  cookies = gameState.cookies || 0;
+
+  // Upgrades im State wiederherstellen
+  if (gameState.upgrades) {
+    for (const id in gameState.upgrades) {
+      if (upgradesState[id]) {
+        upgradesState[id].count = gameState.upgrades[id].count;
+      }
+    }
+  }
+}
+
   // ---------- Init ----------
   function init() {
-    if (scatterFieldEl) scatterFieldEl.innerHTML = "";
-    createUpgradeButtons();
-    updateProduction();
-    updateUI();
+  if (scatterFieldEl) scatterFieldEl.innerHTML = "";
+  createUpgradeButtons();
+  
+  // 1. Spielstand laden
+  loadGame(); 
+  
+  // 2. Icons für geladene Upgrades wiederherstellen
+  for (const id in upgradesState) {
+    const count = upgradesState[id].count;
+    const def = upgradeDefinitions.find(u => u.id === id);
+    for (let i = 0; i < count; i++) {
+      addScatterToken(def); // Platziert die Icons wieder auf dem Feld
+    }
   }
+
+  // 3. UI und Produktion basierend auf geladenen Daten aktualisieren
+  updateProduction();
+  updateUI();
+
+  // 4. Auto-Save Intervall starten (alle 30 Sek.)
+  setInterval(saveGame, 30000);
+}
 
   init();
 });
+window.addEventListener("beforeunload", saveGame);
