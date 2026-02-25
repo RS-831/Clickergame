@@ -274,5 +274,6 @@ function loadGame() {
 }
 
   init();
+  window.addEventListener("beforeunload", saveGame);
 });
-window.addEventListener("beforeunload", saveGame);
+
